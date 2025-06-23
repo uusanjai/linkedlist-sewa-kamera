@@ -97,3 +97,61 @@ void insertKamera(string nama, int harga, int posisi) {
     temp->next = baru;
     cout << ">> Kamera '" << nama << "' disisipkan di posisi " << posisi << "." << endl;
 }
+
+void menu() {
+    int pilihan, harga, posisi;
+    string nama;
+
+    do { 
+        cout << endl << "===== MENU INVENTARIS KAMERA =====" << endl;
+        cout << "1. Tampilkan Semua Kamera" << endl;
+        cout << "2. Tambah Kamera" << endl;
+        cout << "3. Hapus Kamera" << endl;
+        cout << "4. Sisipkan Kamera di Posisi" << endl;
+        cout << "0. Keluar" << endl;
+        cout << "Pilih: ";
+        cin >> pilihan;
+        cin.ignore();
+        switch (pilihan) {
+            case 1:
+                showKamera();
+                break;
+            case 2:
+                cout << "Nama Kamera: ";
+                getline(cin, nama);
+                cout << "Harga Sewa per Hari: ";
+                cin >> harga;
+                cin.ignore();
+                addKamera(nama, harga);
+                break;
+            case 3:
+                cout << "Nama Kamera yang Dihapus: ";
+                getline(cin, nama);
+                deleteKamera(nama);
+                break;
+            case 4:
+                cout << "Nama Kamera: ";
+                getline(cin, nama);
+                cout << "Harga Sewa per Hari: ";
+                cin >> harga;
+                cout << "Posisi Sisip: ";
+                cin >> posisi;
+                cin.ignore();
+                insertKamera(nama, harga, posisi);
+                break;
+            case 0:
+                cout << ">> Terima kasih, keluar dari program." << endl;
+                break;
+            default:
+                cout << ">> Pilihan tidak valid." << endl;
+        }
+
+    } while (pilihan != 0);
+}
+
+int main() {
+    menu();
+    return 0;
+}
+
+
