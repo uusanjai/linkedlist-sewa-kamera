@@ -17,6 +17,15 @@ public:
 
 Kamera* head = nullptr;
 
+void tampilanAwal() {
+    cout << "==============================================" << endl;
+    cout << "  SELAMAT DATANG DI GALURA SEWA KAMERA" << endl;
+    cout << "  \"Galura, Solusi Sewa Kamera Andal dan Terjangkau.\"" << endl;
+    cout << "==============================================" << endl;
+    cout << "Tekan ENTER untuk masuk ke menu..." << endl;
+    cin.ignore();
+}
+
 void showKamera() {
     if (head == nullptr) {
         cout << endl << ">> Tidak ada kamera dalam inventaris." << endl;
@@ -150,8 +159,9 @@ void menu() {
 }
 
 int main() {
-    menu();
+    tampilanAwal(); 
+    menu();         
     return 0;
-}
 
+}
 
