@@ -6,11 +6,13 @@ class Kamera {
 public:
     string nama;
     int hargaSewa;
+    bool tersedia;
     Kamera* next;
 
     Kamera(string n, int h) {
         nama = n;
         hargaSewa = h;
+        tersedia = true;
         next = nullptr;
     }
 };
@@ -27,19 +29,26 @@ void tampilanAwal() {
 }
 
 void showKamera() {
-    if (head == nullptr) {
-        cout << endl << ">> Tidak ada kamera dalam inventaris." << endl;
-        return;
-    }
     Kamera* temp = head;
     int i = 1;
-    cout << endl << "--- Daftar Kamera ---" << endl;
+    bool kosong = true;
+
+    cout << endl << "--- Daftar Kamera Tersedia ---" << endl;
     while (temp != nullptr) {
-        cout << i++ << ". " << temp->nama << " - Rp " << temp->hargaSewa << "/hari" << endl;
+        if (temp->tersedia) {                      // ✅ DITAMBAHKAN: hanya tampilkan jika tersedia
+            cout << i++ << ". " << temp->nama
+                 << " - Rp " << temp->hargaSewa << "/hari" << endl;
+            kosong = false;
+        }
         temp = temp->next;
     }
-    cout << "---------------------" << endl;
+
+    if (kosong) {
+        cout << ">> Tidak ada kamera yang tersedia saat ini." << endl;  // ✅ DITAMBAHKAN
+    }
+    cout << "-----------------------------" << endl;
 }
+
 
 void addKamera(string nama, int harga) {
     Kamera* baru = new Kamera(nama, harga);
@@ -55,30 +64,17 @@ void addKamera(string nama, int harga) {
     cout << ">> Kamera '" << nama << "' berhasil ditambahkan." << endl;
 }
 
-void deleteKamera(string nama) {
-    if (head == nullptr) {
-        cout << ">> Inventaris kosong." << endl;
-        return;
-    }
-
-    Kamera *temp = head, *prev = nullptr;
-    while (temp != nullptr && temp->nama != nama) {
-        prev = temp;
+void sewaKamera(string nama) {
+    Kamera* temp = head;
+    while (temp != nullptr) {
+        if (temp->nama == nama && temp->tersedia) {
+            temp->tersedia = false;
+            cout << ">> Kamera '" << nama << "' berhasil disewa." << endl;
+            return;
+        }
         temp = temp->next;
     }
-
-    if (temp == nullptr) {
-        cout << ">> Kamera '" << nama << "' tidak ditemukan." << endl;
-        return;
-    }
-
-    if (prev == nullptr)
-        head = head->next;
-    else
-        prev->next = temp->next;
-
-    delete temp;
-    cout << ">> Kamera '" << nama << "' berhasil dihapus." << endl;
+    cout << ">> Kamera '" << nama << "' tidak ditemukan atau sedang disewa." << endl;
 }
 
 void insertKamera(string nama, int harga, int posisi) {
@@ -115,7 +111,7 @@ void menu() {
         cout << endl << "===== MENU INVENTARIS KAMERA =====" << endl;
         cout << "1. Tampilkan Semua Kamera" << endl;
         cout << "2. Tambah Kamera" << endl;
-        cout << "3. Hapus Kamera" << endl;
+        cout << "3. Sewa Kamera" << endl;
         cout << "4. Sisipkan Kamera di Posisi" << endl;
         cout << "0. Keluar" << endl;
         cout << "Pilih: ";
@@ -133,11 +129,11 @@ void menu() {
                 cin.ignore();
                 addKamera(nama, harga);
                 break;
-            case 3:
-                cout << "Nama Kamera yang Dihapus: ";
+                case 3:
+                cout << "Nama Kamera yang Disewa: ";
                 getline(cin, nama);
-                deleteKamera(nama);
-                break;
+                sewaKamera(nama);                     // ✅ ganti dari deleteKamera(nama)
+                break; 
             case 4:
                 cout << "Nama Kamera: ";
                 getline(cin, nama);
