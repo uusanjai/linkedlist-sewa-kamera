@@ -21,8 +21,8 @@ Kamera* head = nullptr;
 
 void tampilanAwal() {
     cout << "==============================================" << endl;
-    cout << "  SELAMAT DATANG DI GALURA SEWA KAMERA" << endl;
-    cout << "  \"Galura, Solusi Sewa Kamera Andal dan Terjangkau.\"" << endl;
+    cout << "  SELAMAT DATANG DI NUSA CODER KAMERA" << endl;
+    cout << "  \"NUSA CODER, Solusi Sewa Kamera Andal dan Terjangkau.\"" << endl;
     cout << "==============================================" << endl;
     cout << "Tekan ENTER untuk masuk ke menu..." << endl;
     cin.ignore();
